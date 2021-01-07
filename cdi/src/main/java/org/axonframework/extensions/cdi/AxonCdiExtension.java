@@ -69,10 +69,10 @@ public class AxonCdiExtension implements Extension {
         return producer.produce(beanManager.createCreationalContext(null));
     }
 
-    private Map<Class<?>, AnnotatedType<?>> defaultBeans = new HashMap<>();
-    private Map<Type, Producer<?>> defaultProducers = new HashMap<>();
-    private Map<Type, Class<?>> defaultProducerBeanClasses = new HashMap<>();
-    private Set<Type> nonDefaultProducers = new HashSet<>();
+    private final Map<Class<?>, AnnotatedType<?>> defaultBeans = new HashMap<>();
+    private final Map<Type, Producer<?>> defaultProducers = new HashMap<>();
+    private final Map<Type, Class<?>> defaultProducerBeanClasses = new HashMap<>();
+    private final Set<Type> nonDefaultProducers = new HashSet<>();
 
     /**
      * Collect bean classes marked with the {code @IfNoneDefined} annotation.
