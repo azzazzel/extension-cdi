@@ -18,21 +18,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
-        <artifactId>axon-cdi-parent</artifactId>
+        <artifactId>axon-extension-cdi-parent</artifactId>
         <groupId>org.axonframework.extensions.cdi</groupId>
         <version>4.5-SNAPSHOT</version>
+        <relativePath>../extension-cdi-parent</relativePath>
     </parent>
 
     <artifactId>axon-cdi</artifactId>
+    <packaging>jar</packaging>
 
-    <name>Axon Framework CDI Extension</name>
+    <name>Axon Framework :: CDI Extension</name>
+
     <description>
-        This module contains components that integrate with CDI.
+        This module contains components that integrate Axon Framework with CDI.
     </description>
 
-    <packaging>jar</packaging>
 
     <properties>
         <logback.version>1.1.11</logback.version>
