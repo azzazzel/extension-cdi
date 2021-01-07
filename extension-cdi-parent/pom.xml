@@ -103,7 +103,7 @@
         <h2.version>1.4.200</h2.version>
         <jackson.version>2.9.8</jackson.version>
         <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
-        <javaee-api.version>7.0</javaee-api.version>
+        <javaee-api.version>8.0.1</javaee-api.version>
         <junit.version>4.13.1</junit.version>
         <log4j.version>2.14.0</log4j.version>
         <lombok.version>1.18.16</lombok.version>
