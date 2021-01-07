@@ -96,7 +96,7 @@
 
         <axon.version>4.4.5</axon.version>
 
-        <apache.commons.io.version>1.3.2</apache.commons.io.version>
+        <apache.commons.io.version>2.8.0</apache.commons.io.version>
         <apache.commons.lang.version>3.11</apache.commons.lang.version>
         <apache.deltaspike.version>1.9.4</apache.deltaspike.version>
         <cdi-api.version>2.0</cdi-api.version>
