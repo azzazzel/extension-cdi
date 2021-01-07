@@ -11,8 +11,6 @@
         <relativePath>../../extension-cdi-parent</relativePath>
     </parent>
 
-
-    <groupId>org.axonframework</groupId>
     <artifactId>javaee-axon-example</artifactId>
     <packaging>war</packaging>
 

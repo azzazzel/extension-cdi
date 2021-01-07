@@ -11,9 +11,7 @@
         <relativePath>../extension-cdi-parent</relativePath>
     </parent>
 
-    <groupId>org.axonframework.extensions.cdi</groupId>
     <artifactId>axon-cdi-examples</artifactId>
-    <version>4.5-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Axon Framework :: CDI Extension :: Examples</name>
