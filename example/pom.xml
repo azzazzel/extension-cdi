@@ -21,6 +21,6 @@
     <modules>
         <module>javaee</module>
         <module>javase</module>
-<!--        <module>thorntail</module>-->
+        <module>thorntail</module>
     </modules>
 </project>
