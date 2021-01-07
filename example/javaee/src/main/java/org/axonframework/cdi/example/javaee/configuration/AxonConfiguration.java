@@ -9,7 +9,6 @@ import javax.enterprise.inject.Produces;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
-import org.axonframework.cdi.transaction.JtaTransactionManager;
 import org.axonframework.common.jpa.EntityManagerProvider;
 import org.axonframework.common.jpa.SimpleEntityManagerProvider;
 import org.axonframework.common.transaction.TransactionManager;
@@ -17,6 +16,7 @@ import org.axonframework.eventhandling.tokenstore.TokenStore;
 import org.axonframework.eventhandling.tokenstore.jpa.JpaTokenStore;
 import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
 import org.axonframework.eventsourcing.eventstore.jpa.JpaEventStorageEngine;
+import org.axonframework.extensions.cdi.transaction.JtaTransactionManager;
 import org.axonframework.serialization.Serializer;
 import org.axonframework.serialization.json.JacksonSerializer;
 
@@ -74,7 +74,10 @@ public class AxonConfiguration implements Serializable {
     public EventStorageEngine eventStorageEngine(
             EntityManagerProvider entityManagerProvider,
             TransactionManager transactionManager) {
-        return new JpaEventStorageEngine(entityManagerProvider, transactionManager);
+        return JpaEventStorageEngine.builder()
+                .entityManagerProvider(entityManagerProvider)
+                .transactionManager(transactionManager)
+                .build();
     }
 
     /**
@@ -86,7 +89,10 @@ public class AxonConfiguration implements Serializable {
     @ApplicationScoped
     public TokenStore tokenStore(EntityManagerProvider entityManagerProvider,
             Serializer serializer) {
-        return new JpaTokenStore(entityManagerProvider, serializer);
+        return JpaTokenStore.builder()
+                .entityManagerProvider(entityManagerProvider)
+                .serializer(serializer)
+                .build();
     }
 
     /**
@@ -97,6 +103,6 @@ public class AxonConfiguration implements Serializable {
     @Produces
     @ApplicationScoped
     public Serializer serializer() {
-        return new JacksonSerializer();
+        return JacksonSerializer.builder().build();
     }
 }
