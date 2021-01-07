@@ -1,0 +1,26 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.axonframework.extensions.cdi</groupId>
+        <artifactId>axon-extension-cdi-parent</artifactId>
+        <version>4.5-SNAPSHOT</version>
+        <relativePath>../extension-cdi-parent</relativePath>
+    </parent>
+
+    <groupId>org.axonframework.extensions.cdi</groupId>
+    <artifactId>axon-cdi-examples</artifactId>
+    <version>4.5-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Axon Framework :: CDI Extension :: Examples</name>
+
+    <modules>
+        <module>javaee</module>
+        <module>javase</module>
+<!--        <module>thorntail</module>-->
+    </modules>
+</project>
