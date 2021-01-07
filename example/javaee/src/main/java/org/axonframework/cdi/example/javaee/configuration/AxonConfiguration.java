@@ -1,4 +1,4 @@
-package org.axonframework.cdi.example.javaee.configuration;
+package org.axonframework.extensions.cdi.example.javaee.configuration;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
