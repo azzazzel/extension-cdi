@@ -2,7 +2,6 @@ package org.axonframework.extension.example.swarm.config;
 
 import org.axonframework.common.jpa.EntityManagerProvider;
 import org.axonframework.common.jpa.SimpleEntityManagerProvider;
-import org.axonframework.common.transaction.ContainerTransactionManager;
 import org.axonframework.common.transaction.TransactionManager;
 import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
 import org.axonframework.eventsourcing.eventstore.jpa.JpaEventStorageEngine;
@@ -20,10 +19,10 @@ public class AxonConfiguration {
   @PersistenceContext(name = "MyPU")
   private EntityManager em;
 
-  @Produces
-  public TransactionManager transactionManager() {
-    return new ContainerTransactionManager(em, userTransaction);
-  }
+//  @Produces
+//  public TransactionManager transactionManager() {
+//    return new ContainerTransactionManager(em, userTransaction);
+//  }
 
   @Produces
   public EntityManagerProvider entityManagerProvider() {
@@ -31,7 +30,10 @@ public class AxonConfiguration {
   }
 
   @Produces
-  public EventStorageEngine eventStorageEngine(final EntityManagerProvider emp, final TransactionManager transactionManager) {
-    return new JpaEventStorageEngine(emp, transactionManager);
+  public EventStorageEngine eventStorageEngine(final EntityManagerProvider entityManagerProvider, final TransactionManager transactionManager) {
+    return JpaEventStorageEngine.builder()
+            .entityManagerProvider(entityManagerProvider)
+            .transactionManager(transactionManager)
+            .build();
   }
 }

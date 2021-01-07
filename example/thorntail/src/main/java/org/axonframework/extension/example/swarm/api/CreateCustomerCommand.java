@@ -2,7 +2,7 @@ package org.axonframework.extension.example.swarm.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.axonframework.commandhandling.TargetAggregateIdentifier;
+import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 @AllArgsConstructor
 @Getter

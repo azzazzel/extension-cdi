@@ -4,11 +4,12 @@
   version="2.1"
   xmlns="http://xmlns.jcp.org/xml/ns/persistence"
   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+
   <persistence-unit name="MyPU" transaction-type="JTA">
     <class>org.axonframework.eventsourcing.eventstore.jpa.DomainEventEntry</class>
     <class>org.axonframework.eventsourcing.eventstore.jpa.SnapshotEventEntry</class>
-    <class>org.axonframework.eventhandling.saga.repository.jpa.AssociationValueEntry</class>
-    <class>org.axonframework.eventhandling.saga.repository.jpa.SagaEntry</class>
+    <class>org.axonframework.modelling.saga.repository.jpa.AssociationValueEntry</class>
+    <class>org.axonframework.modelling.saga.repository.jpa.SagaEntry</class>
     <class>org.axonframework.extension.example.swarm.query.CustomerView</class>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
@@ -16,4 +17,5 @@
       <property name="javax.persistence.schema-generation.drop-source" value="metadata"/>
     </properties>
   </persistence-unit>
+
 </persistence>
