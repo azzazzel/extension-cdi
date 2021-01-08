@@ -6,9 +6,9 @@ import org.axonframework.queryhandling.QueryHandler;
 
 import java.util.Optional;
 
-import javax.enterprise.inject.spi.Annotated;
-import javax.enterprise.inject.spi.AnnotatedType;
-import javax.enterprise.inject.spi.Bean;
+import jakarta.enterprise.inject.spi.Annotated;
+import jakarta.enterprise.inject.spi.AnnotatedType;
+import jakarta.enterprise.inject.spi.Bean;
 
 /**
  * @author Milan Savic

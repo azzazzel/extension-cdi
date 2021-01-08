@@ -1,18 +1,18 @@
 package org.axonframework.extensions.cdi.messaging.annotation;
 
-import java.lang.invoke.MethodHandles;
-import org.axonframework.extensions.cdi.CdiUtilities;
+import jakarta.enterprise.inject.spi.Bean;
+import jakarta.enterprise.inject.spi.BeanManager;
 import org.axonframework.common.Priority;
+import org.axonframework.extensions.cdi.CdiUtilities;
 import org.axonframework.messaging.annotation.ParameterResolver;
 import org.axonframework.messaging.annotation.ParameterResolverFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.enterprise.inject.spi.Bean;
-import javax.enterprise.inject.spi.BeanManager;
+import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Executable;
 import java.lang.reflect.Parameter;
 import java.util.Set;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Parameter resolver factory for instantiating Axon artifacts inside of a CDI

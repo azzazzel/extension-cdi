@@ -3,8 +3,8 @@ package org.axonframework.extensions.cdi.messaging.annotation;
 import org.axonframework.extensions.cdi.CdiUtilities;
 import org.axonframework.messaging.annotation.ParameterResolver;
 
-import javax.enterprise.inject.spi.Bean;
-import javax.enterprise.inject.spi.BeanManager;
+import jakarta.enterprise.inject.spi.Bean;
+import jakarta.enterprise.inject.spi.BeanManager;
 import java.lang.reflect.Type;
 import org.axonframework.messaging.Message;
 

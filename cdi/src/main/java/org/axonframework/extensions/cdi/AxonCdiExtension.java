@@ -1,7 +1,11 @@
 package org.axonframework.extensions.cdi;
 
-import org.axonframework.extensions.cdi.stereotype.Aggregate;
-import org.axonframework.extensions.cdi.stereotype.Saga;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Destroyed;
+import jakarta.enterprise.context.Initialized;
+import jakarta.enterprise.event.Observes;
+import jakarta.enterprise.inject.spi.*;
+import jakarta.inject.Named;
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.common.jpa.EntityManagerProvider;
 import org.axonframework.common.lock.LockFactory;
@@ -15,6 +19,8 @@ import org.axonframework.eventhandling.ListenerInvocationErrorHandler;
 import org.axonframework.eventhandling.tokenstore.TokenStore;
 import org.axonframework.eventsourcing.SnapshotTriggerDefinition;
 import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
+import org.axonframework.extensions.cdi.stereotype.Aggregate;
+import org.axonframework.extensions.cdi.stereotype.Saga;
 import org.axonframework.messaging.correlation.CorrelationDataProvider;
 import org.axonframework.modelling.command.CommandTargetResolver;
 import org.axonframework.modelling.command.GenericJpaRepository;
@@ -29,12 +35,6 @@ import org.axonframework.serialization.upcasting.event.EventUpcaster;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.Destroyed;
-import javax.enterprise.context.Initialized;
-import javax.enterprise.event.Observes;
-import javax.enterprise.inject.spi.*;
-import javax.inject.Named;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,9 +1,9 @@
 package org.axonframework.extensions.cdi.stereotype;
 
+import jakarta.enterprise.inject.Stereotype;
+import jakarta.inject.Named;
 import org.axonframework.modelling.command.AggregateRoot;
 
-import javax.enterprise.inject.Stereotype;
-import javax.inject.Named;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
