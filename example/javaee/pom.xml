@@ -11,10 +11,11 @@
         <relativePath>../../extension-cdi-parent</relativePath>
     </parent>
 
-    <artifactId>javaee-axon-example</artifactId>
+    <groupId>org.axonframework.extensions.cdi.example</groupId>
+    <artifactId>javaee-example</artifactId>
     <packaging>war</packaging>
 
-    <name>Axon Framework :: CDI Extension :: Java EE Example</name>
+    <name>Axon CDI Extension Examples :: Java EE</name>
 
     <dependencies>
         <dependency>

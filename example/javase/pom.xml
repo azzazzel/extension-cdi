@@ -11,9 +11,10 @@
         <relativePath>../../extension-cdi-parent</relativePath>
     </parent>
 
-    <artifactId>javase-axon-example</artifactId>
+    <groupId>org.axonframework.extensions.cdi.example</groupId>
+    <artifactId>javase-example</artifactId>
 
-    <name>Axon Framework :: CDI Extension :: Java SE Example</name>
+    <name>Axon CDI Extension Examples :: Java SE</name>
 
     <dependencies>
         <dependency>

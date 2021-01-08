@@ -8,10 +8,11 @@
     <relativePath>../../extension-cdi-parent</relativePath>
   </parent>
 
-  <artifactId>thorntail</artifactId>
+  <groupId>org.axonframework.extensions.cdi.example</groupId>
+  <artifactId>thorntail-example</artifactId>
   <packaging>war</packaging>
 
-  <name>Axon Framework :: CDI Extension :: Thorntail Example</name>
+  <name>Axon CDI Extension Examples :: Thorntail</name>
 
   <properties>
     <failOnMissingWebXml>false</failOnMissingWebXml>
