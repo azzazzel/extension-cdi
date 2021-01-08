@@ -82,14 +82,13 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Test -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <scope>test</scope>
-        </dependency>
 
         <!-- Test dependencies -->
+
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-test</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
@@ -100,6 +99,12 @@
             <groupId>org.jboss.weld</groupId>
             <artifactId>weld-junit4</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.faces</groupId>
+            <artifactId>javax.faces-api</artifactId>
+            <version>2.3</version>
         </dependency>
 
         <dependency>
