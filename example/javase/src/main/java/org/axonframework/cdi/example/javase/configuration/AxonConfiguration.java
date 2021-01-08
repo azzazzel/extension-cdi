@@ -1,11 +1,11 @@
 package org.axonframework.extensions.cdi.example.javase.configuration;
 
-import java.io.Serializable;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
-
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Produces;
 import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
 import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine;
+
+import java.io.Serializable;
 
 @ApplicationScoped
 public class AxonConfiguration implements Serializable {

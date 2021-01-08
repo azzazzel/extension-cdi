@@ -1,10 +1,11 @@
 package org.axonframework.extensions.cdi.example.javase.query;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import org.axonframework.eventhandling.EventHandler;
+
 import java.lang.invoke.MethodHandles;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.ApplicationScoped;
-import org.axonframework.eventhandling.EventHandler;
 
 @ApplicationScoped
 public class GenericEventListener {
