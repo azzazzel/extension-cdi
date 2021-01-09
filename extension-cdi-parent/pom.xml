@@ -103,8 +103,8 @@
         <h2.version>1.4.200</h2.version>
         <jackson.version>2.9.8</jackson.version>
         <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
-        <javaee-api.version>8.0.1</javaee-api.version>
         <junit.version>4.13.1</junit.version>
+        <jakarta.version>9.0.0</jakarta.version>
         <log4j.version>2.14.0</log4j.version>
         <lombok.version>1.18.16</lombok.version>
         <maven-assembly-plugin.version>2.6</maven-assembly-plugin.version>
@@ -122,8 +122,8 @@
         <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
         <mockito.version>2.15.0</mockito.version>
         <slf4j.version>1.7.30</slf4j.version>
-        <transaction.version>1.3</transaction.version>
         <weld-junit.version>1.3.1.Final</weld-junit.version>
+        <transaction.version>2.0.0</transaction.version>
         <weld.version>4.0.0.Final</weld.version>
         <wildfly-swarm.version>2018.5.0</wildfly-swarm.version>
     </properties>
@@ -141,29 +141,33 @@
             </dependency>
 
             <dependency>
-                <!-- This extension -->
+                <!-- This extension (to override the version from Axon BOM) -->
                 <groupId>org.axonframework.extensions.cdi</groupId>
                 <artifactId>axon-cdi</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <!-- The CDI API spec -->
-                <groupId>jakarta.enterprise</groupId>
-                <artifactId>jakarta.enterprise.cdi-api</artifactId>
-                <version>${cdi-api.version}</version>
-                <scope>provided</scope>
-            </dependency>
-
-
-            <dependency>
-                <groupId>javax.transaction</groupId>
-                <artifactId>javax.transaction-api</artifactId>
-                <version>${transaction.version}</version>
+                <!-- Jakarta EE BOM -->
+                <groupId>jakarta.platform</groupId>
+                <artifactId>jakarta.jakartaee-bom</artifactId>
+                <version>${jakarta.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
             <dependency>
-                <!-- Weld is the reference implementation. We use it for testing. -->
+                <!-- Jakarta EE API -->
+                <groupId>jakarta.platform</groupId>
+                <artifactId>jakarta.jakartaee-api</artifactId>
+                <version>${jakarta.version}</version>
+            </dependency>
+
+            <dependency>
+            </dependency>
+
+            <dependency>
+                <!-- Weld is CDI's reference implementation. We use it for testing. -->
                 <groupId>org.jboss.weld.se</groupId>
                 <artifactId>weld-se-core</artifactId>
                 <version>${weld.version}</version>
@@ -205,11 +209,19 @@
                 <version>${slf4j.version}</version>
             </dependency>
             <dependency>
-                <!-- Use Log4j as logging backed for SLF4J-->
+                <!-- Log4j as logging backed for SLF4J-->
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-slf4j18-impl</artifactId>
                 <version>${log4j.version}</version>
             </dependency>
+
+            <dependency>
+                <!-- SLF4J Simple logging -->
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
 
             <dependency>
                 <!-- The Wildfly Swarm BOM -->
@@ -239,13 +251,6 @@
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${apache.commons.io.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>javax</groupId>
-                <artifactId>javaee-api</artifactId>
-                <version>${javaee-api.version}</version>
-                <scope>provided</scope>
             </dependency>
 
             <dependency>

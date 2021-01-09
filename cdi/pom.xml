@@ -40,23 +40,34 @@
     <dependencies>
 
         <dependency>
+            <!-- Axon Framework -->
             <groupId>org.axonframework</groupId>
             <artifactId>axon-configuration</artifactId>
         </dependency>
 
         <dependency>
+            <!-- Jakarta CDI API -->
             <groupId>jakarta.enterprise</groupId>
             <artifactId>jakarta.enterprise.cdi-api</artifactId>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>javax.transaction-api</artifactId>
+            <!-- Jakarta Transaction API -->
+            <groupId>jakarta.transaction</groupId>
+            <artifactId>jakarta.transaction-api</artifactId>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
+            <!-- JSF ?!?! -->
+            <groupId>javax.faces</groupId>
+            <artifactId>javax.faces-api</artifactId>
+            <version>2.3</version>
+        </dependency>
+
+        <dependency>
+            <!-- Apache Commons Lang -->
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
@@ -71,25 +82,22 @@
             <artifactId>deltaspike-core-impl</artifactId>
         </dependency>
 
-        <!-- Logging dependencies -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jul-to-slf4j</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j18-impl</artifactId>
             <scope>test</scope>
         </dependency>
 
-
-        <!-- Test dependencies -->
-
         <dependency>
+            <!-- Axon Framework test fixtures -->
             <groupId>org.axonframework</groupId>
             <artifactId>axon-test</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
@@ -103,9 +111,6 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.faces</groupId>
-            <artifactId>javax.faces-api</artifactId>
-            <version>2.3</version>
         </dependency>
 
         <dependency>
