@@ -6,24 +6,33 @@ import jakarta.enterprise.inject.spi.Bean;
 import jakarta.enterprise.inject.spi.BeanManager;
 import jakarta.enterprise.util.AnnotationLiteral;
 import jakarta.inject.Inject;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import java.io.Serializable;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.Set;
-import org.jboss.weld.junit4.WeldInitiator;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import org.junit.Rule;
-import org.junit.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+@ExtendWith(ArquillianExtension.class)
 public class CdiUtilitiesTest {
 
-    @Rule
-    public WeldInitiator weld = WeldInitiator.from(Foo.class).inject(this).build();
+    @Deployment
+    public static WebArchive createDeployment() {
+        return ShrinkWrap.create(WebArchive.class, "test.war")
+                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+    }
+//    @Rule
+//    public WeldInitiator weld = WeldInitiator.from(Foo.class).inject(this).build();
 
     @Inject
     private BeanManager beanManager;

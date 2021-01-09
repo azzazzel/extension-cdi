@@ -99,12 +99,14 @@
         <apache.commons.io.version>2.8.0</apache.commons.io.version>
         <apache.commons.lang.version>3.11</apache.commons.lang.version>
         <apache.deltaspike.version>1.9.4</apache.deltaspike.version>
+        <arquillian-version>1.7.0.Alpha6</arquillian-version>
         <cdi-api.version>3.0.0</cdi-api.version>
         <h2.version>1.4.200</h2.version>
+        <hamcrest.version>1.3</hamcrest.version>
         <jackson.version>2.9.8</jackson.version>
         <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
-        <junit.version>4.13.1</junit.version>
         <jakarta.version>9.0.0</jakarta.version>
+        <junit-jupiter.version>5.7.0</junit-jupiter.version>
         <log4j.version>2.14.0</log4j.version>
         <lombok.version>1.18.16</lombok.version>
         <maven-assembly-plugin.version>2.6</maven-assembly-plugin.version>
@@ -119,11 +121,11 @@
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
         <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <mockito.version>2.15.0</mockito.version>
         <slf4j.version>1.7.30</slf4j.version>
-        <weld-junit.version>1.3.1.Final</weld-junit.version>
         <transaction.version>2.0.0</transaction.version>
+        <weld-junit.version>2.0.1.Final</weld-junit.version>
         <weld.version>4.0.0.Final</weld.version>
         <wildfly-swarm.version>2018.5.0</wildfly-swarm.version>
     </properties>
@@ -164,6 +166,12 @@
             </dependency>
 
             <dependency>
+                <!-- The Arquillian BOM -->
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>1.7.0.Alpha5</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
             <dependency>
@@ -172,23 +180,30 @@
                 <artifactId>weld-se-core</artifactId>
                 <version>${weld.version}</version>
             </dependency>
+
             <dependency>
-                <groupId>org.jboss.weld</groupId>
-                <artifactId>weld-junit4</artifactId>
-                <version>${weld-junit.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
+                <!-- JUnit 5 API -->
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit-jupiter.version}</version>
                 <scope>test</scope>
             </dependency>
+
+            <dependency>
+                <!-- JUnit 5 Engine -->
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${junit-jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-all</artifactId>
                 <version>${mockito.version}</version>
                 <scope>test</scope>
             </dependency>
+
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
@@ -202,12 +217,14 @@
                 <artifactId>jul-to-slf4j</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
+
             <dependency>
                 <!-- Jakarta Commons Logging implementation backed by SLF4J -->
                 <groupId>org.slf4j</groupId>
                 <artifactId>jcl-over-slf4j</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
+
             <dependency>
                 <!-- Log4j as logging backed for SLF4J-->
                 <groupId>org.apache.logging.log4j</groupId>
@@ -269,6 +286,13 @@
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
                 <version>${h2.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest-all</artifactId>
+                <version>${hamcrest.version}</version>
+                <scope>test</scope>
             </dependency>
 
         </dependencies>
