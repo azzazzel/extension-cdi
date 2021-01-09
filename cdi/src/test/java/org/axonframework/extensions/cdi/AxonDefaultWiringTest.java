@@ -23,6 +23,10 @@ import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.io.File;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -42,10 +46,10 @@ public class AxonDefaultWiringTest {
     @Inject private Instance<QueryUpdateEmitter> queryUpdateEmitter;
 
     @Inject private Instance<CommandBus> commandBus;
-    @Inject private Instance<CommandGateway> commandGateway;
+    @DontTest @Inject private Instance<CommandGateway> commandGateway;
 
     @Inject private Instance<EventBus> eventBus;
-    @Inject private Instance<EventGateway> eventGateway;
+    @DontTest @Inject private Instance<EventGateway> eventGateway;
 
     @Inject private Instance<Serializer> serializer;
 
@@ -62,16 +66,22 @@ public class AxonDefaultWiringTest {
     @TestFactory
     public Stream<DynamicTest> defaultObjectIsWired() {
         return Arrays.stream(this.getClass().getDeclaredFields())
-                .filter(f -> f.getType().isAssignableFrom(Instance.class) )
-                .map(f -> DynamicTest.dynamicTest(
-                        "Testing if " + f.getName() + " is wired",
-                        () -> {
-                            Instance<?> instance = (Instance<?>) f.get(this);
-                            assertTrue(instance.isResolvable(), f.getName() + " is not wired!");
-                            assertEquals(1, instance.stream().count(), "More than one instance of " + f.getName() + " wired!");
-                        })
-                );
+                .filter(field -> field.getType().isAssignableFrom(Instance.class))
+                .filter(field -> !field.isAnnotationPresent(DontTest.class))
+                .map(field -> {
+                    String fieldName = field.getName();
+                    return DynamicTest.dynamicTest(
+                            "Testing if " + fieldName + " is wired",
+                            () -> {
+                                Instance<?> instance = (Instance<?>) field.get(this);
+                                assertTrue(instance.isResolvable(), fieldName + " is not wired!");
+                                assertEquals(1, instance.stream().count(), "More than one instance of " + fieldName + " wired!");
+                            });
+                });
     }
 
+    @Target(ElementType.FIELD)
+    @Retention(RetentionPolicy.RUNTIME)
+    static @interface DontTest {}
 
 }

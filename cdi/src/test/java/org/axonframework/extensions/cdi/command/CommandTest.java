@@ -1,5 +1,6 @@
 package org.axonframework.extensions.cdi.command;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.extensions.cdi.stereotype.Aggregate;
@@ -12,11 +13,8 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import javax.faces.bean.ApplicationScoped;
 
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 
