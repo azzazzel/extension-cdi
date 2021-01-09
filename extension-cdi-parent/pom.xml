@@ -175,27 +175,22 @@
             </dependency>
 
             <dependency>
+                <!-- JUnit 5 BOM -->
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit-jupiter.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
                 <!-- Weld is CDI's reference implementation. We use it for testing. -->
                 <groupId>org.jboss.weld.se</groupId>
                 <artifactId>weld-se-core</artifactId>
                 <version>${weld.version}</version>
             </dependency>
 
-            <dependency>
-                <!-- JUnit 5 API -->
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-api</artifactId>
-                <version>${junit-jupiter.version}</version>
-                <scope>test</scope>
-            </dependency>
 
-            <dependency>
-                <!-- JUnit 5 Engine -->
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-engine</artifactId>
-                <version>${junit-jupiter.version}</version>
-                <scope>test</scope>
-            </dependency>
 
             <dependency>
                 <groupId>org.mockito</groupId>
