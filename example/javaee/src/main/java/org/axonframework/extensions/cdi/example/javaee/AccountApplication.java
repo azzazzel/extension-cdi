@@ -1,16 +1,17 @@
 package org.axonframework.extensions.cdi.example.javaee;
 
-import java.lang.invoke.MethodHandles;
-import java.util.UUID;
-import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
-import javax.inject.Inject;
-import org.axonframework.extensions.cdi.example.javaee.command.CreateAccountCommand;
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.Singleton;
+import jakarta.ejb.Startup;
+import jakarta.inject.Inject;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventhandling.interceptors.EventLoggingInterceptor;
+import org.axonframework.extensions.cdi.example.javaee.command.CreateAccountCommand;
+
+import java.lang.invoke.MethodHandles;
+import java.util.UUID;
+import java.util.logging.Logger;
 
 @Singleton
 @Startup

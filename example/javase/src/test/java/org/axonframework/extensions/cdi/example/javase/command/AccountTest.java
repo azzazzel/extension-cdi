@@ -1,12 +1,12 @@
-package org.axonframework.extensions.cdi.example.javaee.command;
+package org.axonframework.extensions.cdi.example.javase.command;
 
 import org.axonframework.test.aggregate.AggregateTestFixture;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class AccountTest {
 
     private final AggregateTestFixture<Account> account
-            = new AggregateTestFixture<>(Account.class);
+            = new AggregateTestFixture(Account.class);
 
     @Test
     public void testAccountCreate() {

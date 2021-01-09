@@ -18,34 +18,65 @@
     <name>Axon CDI Extension Examples :: Java EE</name>
 
     <dependencies>
+
         <dependency>
-            <groupId>org.axonframework.extensions.cdi</groupId>
-            <artifactId>axon-cdi</artifactId>
-        </dependency>
-        <dependency>
+            <!-- Axon Framework -->
             <groupId>org.axonframework</groupId>
             <artifactId>axon-configuration</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
+            <!-- Axon CDI extension -->
+            <groupId>org.axonframework.extensions.cdi</groupId>
+            <artifactId>axon-cdi</artifactId>
         </dependency>
+
+        <dependency>
+            <!-- Jakarta EE API -->
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <!-- Jakarta Persistence API -->
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
 
-        <!-- Testing -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
+            <!-- Axon Framework test fixtures -->
             <groupId>org.axonframework</groupId>
             <artifactId>axon-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <!-- JUnit 5 API -->
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <!-- JUnit 5 engine -->
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <!-- Hamcrest -->
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -1,4 +1,4 @@
-package org.axonframework.extensions.cdi.example.javase.query;
+package org.axonframework.extensions.cdi.example.javaee.query;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import org.axonframework.eventhandling.EventHandler;

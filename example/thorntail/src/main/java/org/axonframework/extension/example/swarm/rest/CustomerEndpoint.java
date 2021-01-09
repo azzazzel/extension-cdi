@@ -1,17 +1,17 @@
 package org.axonframework.extension.example.swarm.rest;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.extension.example.swarm.aggregate.Customer;
 import org.axonframework.extension.example.swarm.api.CreateCustomerCommand;
 import org.axonframework.extension.example.swarm.query.CustomerView;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.util.UUID;
 

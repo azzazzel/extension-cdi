@@ -1,13 +1,14 @@
 package org.axonframework.extensions.cdi.example.javaee.query;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import org.axonframework.eventhandling.EventBus;
+import org.axonframework.eventhandling.EventHandler;
+import org.axonframework.extensions.cdi.example.javaee.command.AccountCreatedEvent;
+
 import java.lang.invoke.MethodHandles;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import org.axonframework.extensions.cdi.example.javaee.command.AccountCreatedEvent;
-import org.axonframework.eventhandling.EventBus;
-import org.axonframework.eventhandling.EventHandler;
 
 @ApplicationScoped
 public class AccountProjection {

@@ -1,10 +1,10 @@
 package org.axonframework.extensions.cdi.example.javase.query;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.extensions.cdi.example.javase.command.AccountCreatedEvent;
 import org.axonframework.queryhandling.QueryHandler;
 
+import javax.enterprise.context.ApplicationScoped;
 import java.lang.invoke.MethodHandles;
 import java.util.HashMap;
 import java.util.Map;

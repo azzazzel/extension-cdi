@@ -1,14 +1,8 @@
 package org.axonframework.extensions.cdi.example.javaee.configuration;
 
-import java.io.Serializable;
-import java.lang.invoke.MethodHandles;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.persistence.EntityManager;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Produces;
+import jakarta.persistence.EntityManager;
 import org.axonframework.common.jpa.EntityManagerProvider;
 import org.axonframework.common.jpa.SimpleEntityManagerProvider;
 import org.axonframework.common.transaction.TransactionManager;
@@ -19,6 +13,13 @@ import org.axonframework.eventsourcing.eventstore.jpa.JpaEventStorageEngine;
 import org.axonframework.extensions.cdi.transaction.JtaTransactionManager;
 import org.axonframework.serialization.Serializer;
 import org.axonframework.serialization.json.JacksonSerializer;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import java.io.Serializable;
+import java.lang.invoke.MethodHandles;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @ApplicationScoped
 public class AxonConfiguration implements Serializable {
@@ -50,12 +51,12 @@ public class AxonConfiguration implements Serializable {
      *
      * @return entity manager provider.
      */
-    @Produces
-    @ApplicationScoped
-    public EntityManagerProvider entityManagerProvider(
-            EntityManager entityManager) {
-        return new SimpleEntityManagerProvider(entityManager);
-    }
+//    @Produces
+//    @ApplicationScoped
+//    public EntityManagerProvider entityManagerProvider(
+//            EntityManager entityManager) {
+//        return new SimpleEntityManagerProvider(entityManager);
+//    }
 
     @Produces
     @ApplicationScoped

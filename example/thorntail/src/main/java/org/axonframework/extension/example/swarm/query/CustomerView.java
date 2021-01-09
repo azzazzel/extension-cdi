@@ -1,11 +1,10 @@
 package org.axonframework.extension.example.swarm.query;
 
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import javax.persistence.*;
 
 @Entity
 @NamedQueries({

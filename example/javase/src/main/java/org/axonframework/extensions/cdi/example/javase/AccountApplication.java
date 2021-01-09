@@ -1,10 +1,6 @@
 package org.axonframework.extensions.cdi.example.javase;
 
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.se.SeContainer;
-import jakarta.enterprise.inject.se.SeContainerInitializer;
-import jakarta.inject.Inject;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventhandling.interceptors.EventLoggingInterceptor;
@@ -12,6 +8,10 @@ import org.axonframework.extensions.cdi.example.javase.command.CreateAccountComm
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.se.SeContainer;
+import javax.enterprise.inject.se.SeContainerInitializer;
+import javax.inject.Inject;
 import java.util.concurrent.TimeUnit;
 
 @ApplicationScoped
