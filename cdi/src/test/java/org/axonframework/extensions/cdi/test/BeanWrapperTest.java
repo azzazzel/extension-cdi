@@ -1,9 +1,10 @@
-package org.axonframework.extensions.cdi;
+package org.axonframework.extensions.cdi.test;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Any;
 import jakarta.enterprise.inject.Default;
 import jakarta.enterprise.util.AnnotationLiteral;
+import org.axonframework.extensions.cdi.BeanWrapper;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

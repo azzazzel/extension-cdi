@@ -1,4 +1,4 @@
-package org.axonframework.extensions.cdi;
+package org.axonframework.extensions.cdi.test;
 
 import jakarta.enterprise.inject.Instance;
 import jakarta.enterprise.inject.spi.Extension;

@@ -1,4 +1,4 @@
-package org.axonframework.extensions.cdi;
+package org.axonframework.extensions.cdi.test;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Default;
@@ -6,6 +6,8 @@ import jakarta.enterprise.inject.spi.Bean;
 import jakarta.enterprise.inject.spi.BeanManager;
 import jakarta.enterprise.util.AnnotationLiteral;
 import jakarta.inject.Inject;
+import org.axonframework.extensions.cdi.BeanWrapper;
+import org.axonframework.extensions.cdi.CdiUtilities;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;

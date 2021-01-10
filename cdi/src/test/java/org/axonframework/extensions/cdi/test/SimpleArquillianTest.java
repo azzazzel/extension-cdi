@@ -1,4 +1,4 @@
-package org.axonframework.extensions.cdi;
+package org.axonframework.extensions.cdi.test;
 
 import jakarta.enterprise.inject.spi.BeanManager;
 import jakarta.inject.Inject;
@@ -7,7 +7,6 @@ import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 

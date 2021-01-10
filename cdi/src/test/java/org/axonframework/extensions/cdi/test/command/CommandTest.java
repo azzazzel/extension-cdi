@@ -1,4 +1,4 @@
-package org.axonframework.extensions.cdi.command;
+package org.axonframework.extensions.cdi.test.command;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import org.axonframework.commandhandling.CommandHandler;
