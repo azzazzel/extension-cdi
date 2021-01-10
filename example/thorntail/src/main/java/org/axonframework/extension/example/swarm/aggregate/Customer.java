@@ -8,7 +8,6 @@ import org.axonframework.extension.example.swarm.api.CreateCustomerCommand;
 import org.axonframework.extension.example.swarm.api.CustomerCreatedEvent;
 import org.axonframework.extensions.cdi.stereotype.Aggregate;
 import org.axonframework.modelling.command.AggregateIdentifier;
-import org.axonframework.modelling.command.AggregateLifecycle;
 
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 
