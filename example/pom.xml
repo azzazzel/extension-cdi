@@ -22,5 +22,7 @@
         <module>javase</module>
         <module>thorntail</module>
         <module>microprofile-liberty</module>
+        <module>microprofile-quarkus</module>
+        <module>microprofile-wildfly</module>
     </modules>
 </project>
