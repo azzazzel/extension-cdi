@@ -41,7 +41,7 @@
 
     <dependency>
       <groupId>org.axonframework.extensions.cdi</groupId>
-      <artifactId>axon-cdi</artifactId>
+      <artifactId>axon-cdi-javax</artifactId>
     </dependency>
 
     <dependency>

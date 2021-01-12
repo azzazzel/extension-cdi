@@ -1,11 +1,13 @@
 package com.example.demo;
 
-import org.axonframework.queryhandling.QueryGateway;
+import org.axonframework.commandhandling.GenericCommandMessage;
+import org.axonframework.commandhandling.gateway.CommandGateway;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import java.util.concurrent.CompletableFuture;
 
 /**
  *
@@ -14,8 +16,15 @@ import javax.ws.rs.Path;
 @Singleton
 public class HelloController {
 
+    static {
+
+        System.out.println("\n\n HelloController \n\n");
+
+    }
+
+
     @Inject
-    QueryGateway queryGateway;
+    CommandGateway commandGateway;
 
     @GET
     public String sayHello() {
@@ -23,9 +32,10 @@ public class HelloController {
     }
 
     @GET
-    @Path("/query")
-    public String command() {
-        return "QueryGateway injected: " + queryGateway;
+    @Path("/command")
+    public CompletableFuture<String> command() {
+
+        return commandGateway.send(GenericCommandMessage.asCommandMessage("test message"));
     }
 
 }
