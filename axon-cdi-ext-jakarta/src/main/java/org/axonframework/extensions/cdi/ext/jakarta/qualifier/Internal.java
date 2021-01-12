@@ -1,4 +1,4 @@
-package org.axonframework.extensions.cdi.v2.qualifier;
+package org.axonframework.extensions.cdi.ext.jakarta.qualifier;
 
 import jakarta.inject.Qualifier;
 

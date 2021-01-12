@@ -41,6 +41,7 @@
 
     <modules>
         <module>cdi</module>
+        <module>axon-cdi-ext-jakarta</module>
         <module>example</module>
         <module>extension-cdi-parent</module>
     </modules>

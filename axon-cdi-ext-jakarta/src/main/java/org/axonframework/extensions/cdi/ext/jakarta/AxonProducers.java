@@ -1,4 +1,4 @@
-package org.axonframework.extensions.cdi.v2;
+package org.axonframework.extensions.cdi.ext.jakarta;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Default;
@@ -8,16 +8,14 @@ import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.common.AxonConfigurationException;
 import org.axonframework.config.Configuration;
-import org.axonframework.config.Configurer;
-import org.axonframework.config.DefaultConfigurer;
 import org.axonframework.deadline.DeadlineManager;
 import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventhandling.gateway.EventGateway;
 import org.axonframework.eventhandling.scheduling.EventScheduler;
 import org.axonframework.eventsourcing.eventstore.EventStore;
-import org.axonframework.extensions.cdi.v2.optionals.MissingEventScheduler;
-import org.axonframework.extensions.cdi.v2.optionals.MissingEventStore;
-import org.axonframework.extensions.cdi.v2.qualifier.Internal;
+import org.axonframework.extensions.cdi.ext.jakarta.optionals.MissingEventScheduler;
+import org.axonframework.extensions.cdi.ext.jakarta.optionals.MissingEventStore;
+import org.axonframework.extensions.cdi.ext.jakarta.qualifier.Internal;
 import org.axonframework.queryhandling.QueryBus;
 import org.axonframework.queryhandling.QueryGateway;
 import org.axonframework.queryhandling.QueryUpdateEmitter;
@@ -37,14 +35,14 @@ public class AxonProducers implements Serializable {
         LOGGER.debug("Axon Producers is initialized");
     }
 
-    @Produces
-    @ApplicationScoped
-    @Typed(Configurer.class)
-    @Internal
-    public Configurer configurer() {
-        LOGGER.debug("producing Configurer");
-        return DefaultConfigurer.defaultConfiguration();
-    }
+//    @Produces
+//    @ApplicationScoped
+//    @Typed(Configurer.class)
+//    @Internal
+//    public Configurer configurer() {
+//        LOGGER.debug("producing Configurer");
+//        return DefaultConfigurer.defaultConfiguration();
+//    }
 
     @Produces
     @ApplicationScoped

@@ -1,4 +1,4 @@
-package org.axonframework.extensions.cdi.v2.test;
+package org.axonframework.extensions.cdi.ext.jakarta.test;
 
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
@@ -11,12 +11,15 @@ import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventhandling.gateway.EventGateway;
 import org.axonframework.eventhandling.scheduling.EventScheduler;
 import org.axonframework.eventsourcing.eventstore.EventStore;
-import org.axonframework.extensions.cdi.v2.AxonProducers;
+import org.axonframework.extensions.cdi.ext.jakarta.AxonProducers;
 import org.axonframework.queryhandling.QueryBus;
 import org.axonframework.queryhandling.QueryGateway;
 import org.axonframework.queryhandling.QueryUpdateEmitter;
 import org.axonframework.serialization.Serializer;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.shrinkwrap.api.formatter.Formatters;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
@@ -39,7 +42,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(ArquillianExtension.class)
-public class AxonDefaultWiringTest extends DeploymentBaseTest {
+public class AxonDefaultWiringTest extends ArchiveTemplates {
 
     private static Logger LOGGER = LoggerFactory.getLogger(AxonDefaultWiringTest.class);
 
@@ -63,6 +66,13 @@ public class AxonDefaultWiringTest extends DeploymentBaseTest {
     @Inject private Instance<Serializer> serializer;
 
     @Inject private Instance<DeadlineManager> deadlineManager;
+
+    @Deployment
+    public static WebArchive createDeployment () {
+        WebArchive archive = ArchiveTemplates.webArchiveWithCdiExtension();
+        LOGGER.debug("Making archive with following content:\n" + archive.toString(Formatters.VERBOSE));
+        return archive;
+    }
 
     @TestFactory
     @DisplayName("Axon OOTB components are wired?")

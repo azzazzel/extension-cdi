@@ -1,4 +1,4 @@
-package org.axonframework.extensions.cdi.v2.optionals;
+package org.axonframework.extensions.cdi.ext.jakarta.optionals;
 
 import org.axonframework.common.AxonConfigurationException;
 import org.axonframework.common.Registration;
