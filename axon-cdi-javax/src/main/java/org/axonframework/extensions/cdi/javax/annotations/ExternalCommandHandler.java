@@ -1,4 +1,4 @@
-package org.axonframework.extensions.cdi.javax;
+package org.axonframework.extensions.cdi.javax.annotations;
 
 import javax.inject.Qualifier;
 
@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Qualifier
-@Target({ElementType.TYPE, ElementType.METHOD, ElementType.PARAMETER})
+@Target({ElementType.TYPE, ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Internal {
+public @interface ExternalCommandHandler {
 }

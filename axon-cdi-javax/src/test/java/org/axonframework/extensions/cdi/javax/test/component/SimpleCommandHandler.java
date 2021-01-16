@@ -1,7 +1,7 @@
 package org.axonframework.extensions.cdi.javax.test.component;
 
 import org.axonframework.commandhandling.CommandHandler;
-import org.axonframework.extensions.cdi.javax.ExternalCommandHandler;
+import org.axonframework.extensions.cdi.javax.annotations.ExternalCommandHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
