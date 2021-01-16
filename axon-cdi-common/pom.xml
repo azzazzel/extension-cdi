@@ -15,7 +15,7 @@
 
     <artifactId>axon-cdi-common</artifactId>
 
-    <name>Axon Framework :: CDI Beans (jakarta)</name>
+    <name>Axon Framework :: CDI Beans (common)</name>
 
     <description>
         This module contains components that integrate Axon Framework with CDI.
