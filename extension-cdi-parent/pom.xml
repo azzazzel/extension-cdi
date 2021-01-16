@@ -189,6 +189,14 @@
             </dependency>
 
             <dependency>
+                <!-- This extension (without CDI portable extensions) generated from jakarta one -->
+                <groupId>org.axonframework.extensions.cdi</groupId>
+                <artifactId>axon-cdi-javax-generated</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+
+            <dependency>
                 <!-- Jakarta EE BOM -->
                 <groupId>jakarta.platform</groupId>
                 <artifactId>jakarta.jakartaee-bom</artifactId>

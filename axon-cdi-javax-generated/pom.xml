@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2010-2020. Axon Framework
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>axon-extension-cdi-parent</artifactId>
+        <groupId>org.axonframework.extensions.cdi</groupId>
+        <version>4.5-SNAPSHOT</version>
+        <relativePath>../extension-cdi-parent</relativePath>
+    </parent>
+
+    <artifactId>axon-cdi-javax-generated</artifactId>
+    <packaging>jar</packaging>
+
+    <name>Axon Framework :: CDI Beans (javax generated)</name>
+
+    <description>
+        This module contains components that integrate Axon Framework with CDI.
+    </description>
+
+    <properties>
+    </properties>
+
+
+    <dependencies>
+        <dependency>
+            <!-- Axon CDI extension common -->
+            <groupId>org.axonframework.extensions.cdi</groupId>
+            <artifactId>axon-cdi-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>de.icongmbh.oss.maven.plugins</groupId>
+            <artifactId>javassist-maven-plugin</artifactId>
+            <version>2.0.2</version>
+        </dependency>
+
+        <dependency>
+            <!-- JUnit 5 API -->
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <!-- JUnit 5 engine -->
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/jakarta/**</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <!-- 1. Phase process-sources: Unpack jasper-el to the target/dependency/ folder -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.axonframework.extensions.cdi</groupId>
+                                    <artifactId>axon-cdi-jakarta</artifactId>
+                                </artifactItem>
+                            </artifactItems>
+                            <excludes>META-INF/**</excludes>
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <overWriteReleases>true</overWriteReleases>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 2. Phase process-classes: do the bytecode magic -->
+            <plugin>
+                <groupId>de.icongmbh.oss.maven.plugins</groupId>
+                <artifactId>javassist-maven-plugin</artifactId>
+                <version>2.0.2</version>
+                <configuration>
+                    <includeTestClasses>false</includeTestClasses>
+                    <transformerClasses>
+                        <transformerClass>
+                            <className>javax.JakartaToJavaxInPlaceTransformer</className>
+                        </transformerClass>
+                    </transformerClasses>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>javassist</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <!-- Jakarta CDI API -->
+                        <groupId>jakarta.enterprise</groupId>
+                        <artifactId>jakarta.enterprise.cdi-api</artifactId>
+                        <version>3.0.0</version>
+                    </dependency>
+
+                    <dependency>
+                        <!-- Jakarta Transaction API -->
+                        <groupId>jakarta.transaction</groupId>
+                        <artifactId>jakarta.transaction-api</artifactId>
+                        <version>2.0.0</version>
+                    </dependency>
+
+                    <dependency>
+                        <!-- CDI API (javax package)-->
+                        <groupId>javax.enterprise</groupId>
+                        <artifactId>cdi-api</artifactId>
+                        <version>${javax-cdi.version}</version>
+                    </dependency>
+
+                    <dependency>
+                        <!-- JTA API (javax package)-->
+                        <groupId>javax.transaction</groupId>
+                        <artifactId>javax.transaction-api</artifactId>
+                        <version>${javax-jta.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

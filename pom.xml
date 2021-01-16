@@ -46,6 +46,7 @@
         <module>axon-cdi-common</module>
         <module>axon-cdi-jakarta</module>
         <module>axon-cdi-javax</module>
+        <module>axon-cdi-javax-generated</module>
         <module>example</module>
         <module>extension-cdi-parent</module>
     </modules>
