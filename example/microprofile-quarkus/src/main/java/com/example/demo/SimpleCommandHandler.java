@@ -8,7 +8,7 @@ package com.example.demo;
 
 
 import org.axonframework.commandhandling.CommandHandler;
-import org.axonframework.extensions.cdi.javax.ExternalCommandHandler;
+import org.axonframework.extensions.cdi.javax.annotations.ExternalCommandHandler;
 
 import javax.enterprise.context.ApplicationScoped;
 

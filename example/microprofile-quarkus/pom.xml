@@ -31,15 +31,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.axonframework</groupId>
-            <artifactId>axon-configuration</artifactId>
-        </dependency>
-
-        <dependency>
           <groupId>org.axonframework.extensions.cdi</groupId>
           <artifactId>axon-cdi-javax</artifactId>
         </dependency>
-
     </dependencies>
 
 
