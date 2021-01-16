@@ -1,5 +1,6 @@
 package org.axonframework.extensions.cdi.jakarta.test;
 
+import org.axonframework.extensions.cdi.common.AbstractAxonProducers;
 import org.axonframework.extensions.cdi.jakarta.AxonProducers;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -39,16 +40,13 @@ public abstract class ArchiveTemplates {
     public static JavaArchive javaArchive() {
         JavaArchive archive = ShrinkWrap.create(JavaArchive.class, "axon-cdi-generated.jar")
                 .addPackages(true, AxonProducers.class.getPackage())
+                .addPackages(true, AbstractAxonProducers.class.getPackage())
                 .deletePackages(true, ArchiveTemplates.class.getPackage())
                 .addAsManifestResource("META-INF/beans.xml");
 
         LOGGER.debug("Making archive with following content:\n" + archive.toString(Formatters.VERBOSE));
 
         return archive;
-    }
-
-    public static void main(String[] args) {
-        webArchiveWithCdiExtension();
     }
 
 }

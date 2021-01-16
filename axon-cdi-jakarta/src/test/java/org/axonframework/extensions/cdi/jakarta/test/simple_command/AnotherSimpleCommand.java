@@ -1,4 +1,4 @@
-package org.axonframework.extensions.cdi.jakarta.test.component;
+package org.axonframework.extensions.cdi.jakarta.test.simple_command;
 
 public class AnotherSimpleCommand {
 

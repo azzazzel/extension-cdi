@@ -44,7 +44,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(ArquillianExtension.class)
 public class AxonDefaultWiringTest extends ArchiveTemplates {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(AxonDefaultWiringTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AxonDefaultWiringTest.class);
 
     @Internal @Inject private Instance<AxonProducers> producers;
     @Internal @Inject private Instance<Configurer> axonConfigurer;
@@ -127,8 +127,9 @@ public class AxonDefaultWiringTest extends ArchiveTemplates {
     };
 
 
-    private boolean successfullyExecuteMethodOnInstance(Instance instance) {
+    private boolean successfullyExecuteMethodOnInstance(@SuppressWarnings("rawtypes") Instance instance) {
         try {
+            //noinspection ResultOfMethodCallIgnored
             instance.get().toString();
             return true;
         } catch (Exception e) {

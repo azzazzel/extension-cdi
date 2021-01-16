@@ -1,21 +1,26 @@
 package org.axonframework.extensions.cdi.jakarta;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.*;
+import jakarta.enterprise.inject.Default;
+import jakarta.enterprise.inject.Instance;
+import jakarta.enterprise.inject.Produces;
+import jakarta.enterprise.inject.Typed;
+import jakarta.enterprise.inject.spi.BeanManager;
+import jakarta.enterprise.util.AnnotationLiteral;
 import jakarta.inject.Inject;
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.axonframework.common.AxonConfigurationException;
 import org.axonframework.config.Configuration;
-import org.axonframework.config.Configurer;
-import org.axonframework.config.DefaultConfigurer;
 import org.axonframework.deadline.DeadlineManager;
 import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventhandling.gateway.EventGateway;
 import org.axonframework.eventhandling.scheduling.EventScheduler;
+import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
 import org.axonframework.eventsourcing.eventstore.EventStore;
-import org.axonframework.extensions.cdi.jakarta.optional.MissingEventScheduler;
-import org.axonframework.extensions.cdi.jakarta.optional.MissingEventStore;
+import org.axonframework.extensions.cdi.common.AbstractAxonProducers;
+import org.axonframework.extensions.cdi.jakarta.annotations.Aggregate;
+import org.axonframework.extensions.cdi.jakarta.annotations.ExternalCommandHandler;
+import org.axonframework.extensions.cdi.jakarta.annotations.Internal;
 import org.axonframework.queryhandling.QueryBus;
 import org.axonframework.queryhandling.QueryGateway;
 import org.axonframework.queryhandling.QueryUpdateEmitter;
@@ -24,148 +29,158 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 @ApplicationScoped
 @Internal
-public class AxonProducers implements Serializable {
+public class AxonProducers extends AbstractAxonProducers implements Serializable {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(AxonProducers.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AxonProducers.class);
 
     static {
-
-        System.out.println("\n\n AxonProducers \n\n");
-
-        LOGGER.debug("Axon Producers is initialized");
+        LOGGER.info("Axon Producers (jakarta version) is loaded");
     }
 
-    @Inject @ExternalCommandHandler
-    Instance<Object> externalCommandHandlers;
+    @Inject
+    @ExternalCommandHandler
+    protected Instance<Object> commandHandlers;
 
-    @Produces
-    @ApplicationScoped
+    @Inject
+    BeanManager beanManager;
+
+    @Inject
+    Instance<EventStorageEngine> eventStorageEngines;
+
+    @Override
+    protected Stream<Object> getCommandHandlers() {
+        LOGGER.debug("collecting annotated command handlers");
+        return commandHandlers.stream()
+                .peek(o -> LOGGER.debug("found command handler: " + o));
+    }
+
+    @Override
+    protected Stream<Class> getAggregates() {
+        LOGGER.debug("collecting annotated aggregates");
+
+        return beanManager.getBeans(Object.class, new AnnotationLiteral<Aggregate>() {}).stream()
+                .peek(bean -> LOGGER.debug("found aggregate: " + bean))
+                .map(bean -> (Class) bean.getBeanClass());
+    }
+
+    @Override
+    protected Optional<EventStorageEngine> getEventStore() {
+        LOGGER.debug("looking for event storage engine");
+        return eventStorageEngines.stream()
+                .peek(bean -> LOGGER.debug("found event storage engine: " + bean))
+                .findFirst();
+    }
+
+    @Default
     @Typed(Configuration.class)
-    @Default
-    public Configuration commandBus() {
-        LOGGER.debug("Building Axon Framework configuration");
-        Configurer configurer = DefaultConfigurer.defaultConfiguration();
-
-        externalCommandHandlers.stream().forEach(ech -> {
-            LOGGER.debug("Registering external command handler: " + ech);
-            configurer.registerCommandHandler(configuration -> ech);
-        });
-
-        Configuration configuration = configurer.buildConfiguration();
-        configuration.start();
-        return configuration;
+    @ApplicationScoped
+    @Produces
+    @Override
+    public Configuration configuration() {
+        return super.configuration();
     }
 
-
-    @Produces
-    @ApplicationScoped
+    @Default
     @Typed(CommandBus.class)
-    @Default
-    public CommandBus commandBus(Configuration configuration) {
-        LOGGER.debug("producing CommandBus");
-        return configuration.commandBus();
-    }
-
-    @Produces
     @ApplicationScoped
-    @Typed(CommandGateway.class)
-    @Default
-    @Any
-    public CommandGateway commandGateway(Configuration configuration) {
-        LOGGER.debug("producing CommandGateway");
-        return configuration.commandGateway();
+    @Produces
+    @Override
+    public CommandBus commandBus(Configuration configuration) {
+        return super.commandBus(configuration);
     }
 
+    @Default
+    @Typed(CommandGateway.class)
+    @ApplicationScoped
     @Produces
+    @Override
+    public CommandGateway commandGateway(Configuration configuration) {
+        return super.commandGateway(configuration);
+    }
+
+    @Default
     @Typed(QueryBus.class)
     @ApplicationScoped
-    @Default
+    @Produces
+    @Override
     public QueryBus queryBus(Configuration configuration) {
-        LOGGER.debug("producing QueryBus");
-        return configuration.queryBus();
+        return super.queryBus(configuration);
     }
 
-    @Produces
-    @ApplicationScoped
+    @Default
     @Typed(QueryGateway.class)
-    @Default
+    @ApplicationScoped
+    @Produces
+    @Override
     public QueryGateway queryGateway(Configuration configuration) {
-        LOGGER.debug("producing QueryGateway");
-        return configuration.queryGateway();
+        return super.queryGateway(configuration);
     }
 
-    @Produces
-    @ApplicationScoped
+    @Default
     @Typed(QueryUpdateEmitter.class)
-    @Default
+    @ApplicationScoped
+    @Produces
+    @Override
     public QueryUpdateEmitter queryUpdateEmitter(Configuration configuration) {
-        LOGGER.debug("producing QueryUpdateEmitter");
-        return configuration.queryUpdateEmitter();
+        return super.queryUpdateEmitter(configuration);
     }
 
-    @Produces
-    @ApplicationScoped
+    @Default
     @Typed(EventBus.class)
-    @Default
+    @ApplicationScoped
+    @Produces
+    @Override
     public EventBus eventBus(Configuration configuration) {
-        LOGGER.debug("producing EventBus");
-        return configuration.eventBus();
+        return super.eventBus(configuration);
     }
 
-    @Produces
-    @ApplicationScoped
+    @Default
     @Typed(EventGateway.class)
-    @Default
+    @ApplicationScoped
+    @Produces
+    @Override
     public EventGateway eventGateway(Configuration configuration) {
-        LOGGER.debug("producing EventGateway");
-        return configuration.eventGateway();
+        return super.eventGateway(configuration);
     }
 
-    @Produces
-    @ApplicationScoped
+    @Default
     @Typed(EventStore.class)
-    @Default
+    @ApplicationScoped
+    @Produces
+    @Override
     public EventStore eventStore(Configuration configuration) {
-        LOGGER.debug("producing EventStore");
-        try {
-            return configuration.eventStore();
-        } catch (AxonConfigurationException e) {
-            return new MissingEventStore(e.getMessage());
-        }
+        return super.eventStore(configuration);
     }
 
-    @Produces
-    @ApplicationScoped
+    @Default
     @Typed(EventScheduler.class)
-    @Default
+    @ApplicationScoped
+    @Produces
+    @Override
     public EventScheduler eventScheduler(Configuration configuration) {
-        LOGGER.debug("producing EventScheduler");
-        EventScheduler eventScheduler = configuration.eventScheduler();
-        if (eventScheduler == null) {
-            eventScheduler = new MissingEventScheduler("No EventScheduler is configured");
-        }
-        return eventScheduler;
+        return super.eventScheduler(configuration);
     }
 
-    @Produces
-    @ApplicationScoped
+    @Default
     @Typed(Serializer.class)
-    @Default
-    public Serializer eventSerializer(Configuration configuration) {
-        LOGGER.debug("producing Serializer");
-        return configuration.serializer();
-    }
-
-    @Produces
     @ApplicationScoped
-    @Typed(DeadlineManager.class)
-    @Default
-    public DeadlineManager eventDeadlineManager(Configuration configuration) {
-        LOGGER.debug("producing DeadlineManager");
-        return configuration.deadlineManager();
+    @Produces
+    @Override
+    public Serializer eventSerializer(Configuration configuration) {
+        return super.eventSerializer(configuration);
     }
 
+    @Default
+    @Typed(DeadlineManager.class)
+    @ApplicationScoped
+    @Produces
+    @Override
+    public DeadlineManager eventDeadlineManager(Configuration configuration) {
+        return super.eventDeadlineManager(configuration);
+    }
 }

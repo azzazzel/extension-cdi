@@ -1,12 +1,9 @@
-package org.axonframework.extensions.cdi.jakarta.test;
+package org.axonframework.extensions.cdi.jakarta.test.simple_command;
 
 import jakarta.inject.Inject;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 
-import org.axonframework.extensions.cdi.jakarta.test.component.SimpleCommandHandler;
-import org.axonframework.extensions.cdi.jakarta.test.component.SimpleCommandHandler2;
-import org.axonframework.extensions.cdi.jakarta.test.component.AnotherSimpleCommand;
-import org.axonframework.extensions.cdi.jakarta.test.component.SimpleCommand;
+import org.axonframework.extensions.cdi.jakarta.test.ArchiveTemplates;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -31,10 +28,7 @@ public class CommandHandlerTest {
                 .addClass(SimpleCommandHandler.class)
                 .addClass(SimpleCommandHandler2.class)
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
-
-
         LOGGER.debug("Making archive with following content:\n" + archive.toString(Formatters.VERBOSE));
-
         return archive;
     }
 

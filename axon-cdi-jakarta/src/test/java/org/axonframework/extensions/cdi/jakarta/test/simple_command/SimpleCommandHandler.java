@@ -1,7 +1,9 @@
-package org.axonframework.extensions.cdi.jakarta.test.component;
+package org.axonframework.extensions.cdi.jakarta.test.simple_command;
 
+import jakarta.inject.Inject;
 import org.axonframework.commandhandling.CommandHandler;
-import org.axonframework.extensions.cdi.jakarta.ExternalCommandHandler;
+import org.axonframework.eventhandling.gateway.EventGateway;
+import org.axonframework.extensions.cdi.jakarta.annotations.ExternalCommandHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,6 +11,9 @@ import org.slf4j.LoggerFactory;
 public class SimpleCommandHandler {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(SimpleCommandHandler.class);
+
+    @Inject
+    EventGateway eventGateway;
 
     @CommandHandler
     public void handle(SimpleCommand cmd) {
@@ -18,5 +23,6 @@ public class SimpleCommandHandler {
     @CommandHandler
     public void handle(AnotherSimpleCommand cmd) {
         LOGGER.info("Handling command " + cmd);
+        eventGateway.publish("test");
     }
 }
