@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>axon-extension-cdi-parent</artifactId>
+        <groupId>org.axonframework.extensions.cdi</groupId>
+        <version>4.5-SNAPSHOT</version>
+        <relativePath>../extension-cdi-parent</relativePath>
+    </parent>
+
+
+    <artifactId>axon-cdi-common</artifactId>
+
+    <name>Axon Framework :: CDI Beans (jakarta)</name>
+
+    <description>
+        This module contains components that integrate Axon Framework with CDI.
+    </description>
+
+    <dependencies>
+
+        <dependency>
+            <!-- Axon Framework -->
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-configuration</artifactId>
+        </dependency>
+
+        <dependency>
+            <!-- send java.util.logging to SLF4J -->
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+
+
+    </dependencies>
+</project>

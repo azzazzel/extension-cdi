@@ -40,9 +40,9 @@
     <dependencies>
 
         <dependency>
-            <!-- Axon Framework -->
-            <groupId>org.axonframework</groupId>
-            <artifactId>axon-configuration</artifactId>
+            <!-- Axon CDI extension common -->
+            <groupId>org.axonframework.extensions.cdi</groupId>
+            <artifactId>axon-cdi-common</artifactId>
         </dependency>
 
         <dependency>

@@ -1,4 +1,4 @@
-package org.axonframework.extensions.cdi.javax.optional;
+package org.axonframework.extensions.cdi.common;
 
 import org.axonframework.common.AxonConfigurationException;
 import org.axonframework.eventhandling.scheduling.EventScheduler;

@@ -94,7 +94,8 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <axon.version>4.5-SNAPSHOT</axon.version>
+        <axon.version>4.4.5</axon.version>
+<!--        <axon.version>4.5-SNAPSHOT</axon.version>-->
 
         <apache.commons.io.version>2.8.0</apache.commons.io.version>
         <apache.commons.lang.version>3.11</apache.commons.lang.version>
@@ -156,6 +157,13 @@
                 <!-- This extension (jakarta with CDI portable extensions) -->
                 <groupId>org.axonframework.extensions.cdi</groupId>
                 <artifactId>axon-cdi-ext-jakarta</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- This extension (common module) -->
+                <groupId>org.axonframework.extensions.cdi</groupId>
+                <artifactId>axon-cdi-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
