@@ -52,8 +52,4 @@ public abstract class ArchiveTemplates {
         return archive;
     }
 
-    public static void main(String[] args) {
-        webArchiveWithCdiExtension();
-    }
-
 }
