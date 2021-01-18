@@ -3,22 +3,15 @@ package org.axonframework.extensions.cdi.common;
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.common.AxonConfigurationException;
-import org.axonframework.config.AggregateConfigurer;
 import org.axonframework.config.Configuration;
 import org.axonframework.config.Configurer;
 import org.axonframework.config.DefaultConfigurer;
 import org.axonframework.deadline.DeadlineManager;
-import org.axonframework.eventhandling.DomainEventMessage;
 import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventhandling.gateway.EventGateway;
 import org.axonframework.eventhandling.scheduling.EventScheduler;
-import org.axonframework.eventsourcing.AggregateFactory;
 import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
 import org.axonframework.eventsourcing.eventstore.EventStore;
-import org.axonframework.messaging.Message;
-import org.axonframework.messaging.ScopeDescriptor;
-import org.axonframework.modelling.command.Aggregate;
-import org.axonframework.modelling.command.Repository;
 import org.axonframework.queryhandling.QueryBus;
 import org.axonframework.queryhandling.QueryGateway;
 import org.axonframework.queryhandling.QueryUpdateEmitter;
@@ -26,92 +19,55 @@ import org.axonframework.serialization.Serializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Optional;
-import java.util.concurrent.Callable;
-import java.util.stream.Stream;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.axonframework.extensions.cdi.common.AggregateRegistration.register;
 
 public abstract class AbstractAxonProducers {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAxonProducers.class);
 
-    protected abstract Stream<Object> getCommandHandlers();
+    protected Set<AggregateInfo> aggregateInfoSet = new HashSet<>();
+    protected Set<Object> commandHandlersSet = new HashSet<>();
+    protected Set<EventStorageEngine> eventStorageEnginesSet = new HashSet<>();
+    private boolean discoveryComplete = false;
 
-    protected abstract Stream<Class> getAggregates();
+    protected abstract void discoverAxonObjects();
 
-    protected abstract Optional<EventStorageEngine> getEventStore();
-
-    public <T> Configuration configuration() {
+    public Configuration configuration() {
         LOGGER.debug("Building Axon Framework configuration");
+
+        if (!discoveryComplete) {
+            discoverAxonObjects();
+            discoveryComplete = true;
+        }
+
         Configurer configurer = DefaultConfigurer.defaultConfiguration();
 
-        getEventStore().ifPresent(eventStore ->
-                configurer.configureEmbeddedEventStore(configuration -> eventStore));
+        if (eventStorageEnginesSet.size() > 1) {
+            LOGGER.warn("More than one EventStorageEngine registered: " + eventStorageEnginesSet);
+        }
 
-        getCommandHandlers()
-                .forEach(ech -> {
-                    LOGGER.debug("Registering command handler: " + ech);
-                    configurer.registerCommandHandler(configuration -> ech);
+        eventStorageEnginesSet.stream().findFirst().ifPresent(eventStore -> {
+            LOGGER.debug("Registering event store: " + eventStore);
+            configurer.configureEmbeddedEventStore(configuration -> eventStore);
+        });
+
+        commandHandlersSet.stream()
+                .forEach(commandHandler -> {
+                    LOGGER.debug("Registering command handler: " + commandHandler);
+                    configurer.registerCommandHandler(configuration -> commandHandler);
                 });
 
-        getAggregates()
-                .forEach(aggregateClass -> {
-                    LOGGER.debug("Registering aggregate: " + aggregateClass);
-                    AggregateConfigurer aggregateConfigurer = AggregateConfigurer.defaultConfiguration (aggregateClass);
-                    aggregateConfigurer.configureRepository(configuration -> {
-                        return new Repository() {
-                            @Override
-                            public void send(Message<?> message, ScopeDescriptor scopeDescriptor) throws Exception {
-                                System.out.println("REPO:: send " + message);
-                            }
-
-                            @Override
-                            public boolean canResolve(ScopeDescriptor scopeDescriptor) {
-                                System.out.println("REPO:: canResolve " + scopeDescriptor.scopeDescription());
-                                return false;
-                            }
-
-                            @Override
-                            public Aggregate load(String s) {
-                                System.out.println("REPO:: load " + s);
-                                return null;
-                            }
-
-                            @Override
-                            public Aggregate load(String s, Long aLong) {
-                                System.out.println("REPO:: canResolve " + aLong);
-                                return null;
-                            }
-
-                            @Override
-                            public Aggregate newInstance(Callable callable) throws Exception {
-                                System.out.println("REPO:: canResolve " + callable);
-                                return null;
-                            }
-                        };
-                    });
-                    aggregateConfigurer.configureAggregateFactory(configuration -> {
-                        System.out.println("\n\n --- configureAggregateFactory !!!");
-                       return new AggregateFactory() {
-                           @Override
-                           public Class getAggregateType() {
-                               System.out.println("\n\n --- getAggregateType called !!!");
-                               return aggregateClass;
-                           }
-
-                           @Override
-                           public Object createAggregateRoot(String s, DomainEventMessage domainEventMessage) {
-                               System.out.println("\n\n --- createAggregateRoot called !!!");
-                               return null;
-                           }
-                       };
-                    });
-                    configurer.configureAggregate(aggregateConfigurer);
-                });
+        register(aggregateInfoSet, configurer);
 
         Configuration configuration = configurer.buildConfiguration();
         configuration.start();
+
         return configuration;
     }
+
 
     public CommandBus commandBus(Configuration configuration) {
         LOGGER.debug("producing CommandBus");
