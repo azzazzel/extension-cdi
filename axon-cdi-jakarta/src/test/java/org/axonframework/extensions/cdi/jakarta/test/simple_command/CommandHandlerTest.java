@@ -14,6 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.axonframework.extensions.cdi.jakarta.test.TestUtils.echo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @ExtendWith(ArquillianExtension.class)
@@ -26,7 +28,6 @@ public class CommandHandlerTest {
         WebArchive archive = ArchiveTemplates.webArchiveWithCdiExtension();
         archive
                 .addClass(SimpleCommandHandler.class)
-                .addClass(SimpleCommandHandler2.class)
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
         LOGGER.debug("Making archive with following content:\n" + archive.toString(Formatters.VERBOSE));
         return archive;
@@ -35,24 +36,16 @@ public class CommandHandlerTest {
     @Inject
     CommandGateway commandGateway;
 
+    private String message = "test command";
+
     @Test
     public void test() {
         try {
-            commandGateway.send(new SimpleCommand("test command")).get();
-            LOGGER.info("Command sent");
+            String result = (String) commandGateway.send(new SimpleCommand(message)).get();
+            assertEquals(echo(message), result);
+            result = (String) commandGateway.send(new AnotherSimpleCommand(message)).get();
+            assertEquals(echo(message), result);
         } catch (Exception e) {
-            LOGGER.info("Sending command FAILED with " + e);
-            fail("Sending command FAILED with " + e);
-        }
-    }
-
-    @Test
-    public void test2() {
-        try {
-            commandGateway.send(new AnotherSimpleCommand("test command")).get();
-            LOGGER.info("Command sent");
-        } catch (Exception e) {
-            LOGGER.info("Sending command FAILED with " + e);
             fail("Sending command FAILED with " + e);
         }
     }

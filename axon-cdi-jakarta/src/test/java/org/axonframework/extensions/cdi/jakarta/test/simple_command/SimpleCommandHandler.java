@@ -7,6 +7,8 @@ import org.axonframework.extensions.cdi.jakarta.annotations.ExternalCommandHandl
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.axonframework.extensions.cdi.jakarta.test.TestUtils.echo;
+
 @ExternalCommandHandler
 public class SimpleCommandHandler {
 
@@ -16,13 +18,15 @@ public class SimpleCommandHandler {
     EventGateway eventGateway;
 
     @CommandHandler
-    public void handle(SimpleCommand cmd) {
+    public String handle(SimpleCommand cmd) {
         LOGGER.info("Handling command " + cmd);
+        return echo(cmd.getCommand());
     }
 
     @CommandHandler
-    public void handle(AnotherSimpleCommand cmd) {
+    public String handle(AnotherSimpleCommand cmd) {
         LOGGER.info("Handling command " + cmd);
         eventGateway.publish("test");
+        return echo(cmd.getCommand());
     }
 }

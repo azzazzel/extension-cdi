@@ -1,4 +1,4 @@
-package org.axonframework.extensions.cdi.jakarta.test.simple_aggregate;
+package org.axonframework.extensions.cdi.jakarta.test.simple_command;
 
 import jakarta.inject.Inject;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -13,22 +13,21 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.UUID;
-
-import static org.axonframework.extensions.cdi.jakarta.test.TestUtils.success;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.axonframework.extensions.cdi.jakarta.test.TestUtils.echo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @ExtendWith(ArquillianExtension.class)
-public class SimpleAggregateTest {
+public class DuplicateCommandHandlerTest {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(SimpleAggregateTest.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(DuplicateCommandHandlerTest.class);
 
     @Deployment
     public static WebArchive createDeployment () {
         WebArchive archive = ArchiveTemplates.webArchiveWithCdiExtension();
         archive
-                .addPackage(SimpleAggregateTest.class.getPackage().getName())
+                .addClass(SimpleCommandHandler.class)
+                .addClass(SimpleCommandHandler2.class)
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
         LOGGER.debug("Making archive with following content:\n" + archive.toString(Formatters.VERBOSE));
         return archive;
@@ -37,17 +36,24 @@ public class SimpleAggregateTest {
     @Inject
     CommandGateway commandGateway;
 
+    private String message = "test command";
+
+    /*
+        TODO: check if
+         - the order in which command handlers are registered is significant
+         - there is particular rule which handler should handle the command
+     */
+
+
     @Test
     public void test() {
-        success.set(false);
         try {
-            commandGateway.send(new CreateSimpleAggregateCommand(UUID.randomUUID()));
-            LOGGER.info("Command sent");
-            assertTrue(success.get());
+            String result = (String) commandGateway.send(new SimpleCommand(message)).get();
+            assertEquals(echo(message), result);
+            result = (String) commandGateway.send(new AnotherSimpleCommand(message)).get();
+            assertEquals(echo(message), result);
         } catch (Exception e) {
-            LOGGER.info("Sending command FAILED", e);
-            fail("Sending command FAILED", e);
+            fail("Sending command FAILED with " + e);
         }
     }
-
 }

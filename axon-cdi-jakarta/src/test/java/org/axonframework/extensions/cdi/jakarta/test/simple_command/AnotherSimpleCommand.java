@@ -8,6 +8,10 @@ public class AnotherSimpleCommand {
         this.command = command;
     }
 
+    public String getCommand() {
+        return command;
+    }
+
     @Override
     public String toString() {
         return "SimpleCommand{" +
