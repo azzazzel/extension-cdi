@@ -109,7 +109,7 @@ public class AggregateRegistration {
             Optional.ofNullable(aggregateInfo.aggregateFactory).ifPresent(aggregateFactory ->
                     aggregateConfigurer.configureAggregateFactory(
                             configuration -> {
-                                LOGGER.debug("Configure aggregate's factory from " + aggregateInfo);
+                                LOGGER.debug("Configure aggregate's factory from " + aggregateInfo.aggregateFactory);
                                 return aggregateFactory;
                             }
                     )
@@ -118,7 +118,7 @@ public class AggregateRegistration {
             Optional.ofNullable(aggregateInfo.repository).ifPresent(
                     repository -> aggregateConfigurer.configureRepository(
                             configuration -> {
-                                LOGGER.debug("Configure aggregate's repository from " + aggregateInfo);
+                                LOGGER.debug("Configure aggregate's repository from " + aggregateInfo.repository);
                                 return repository;
                             }
                     )
@@ -132,10 +132,10 @@ public class AggregateRegistration {
 //                );
 //            }
             Optional.ofNullable(aggregateInfo.snapshotFilter).ifPresent(
-                    snapshotFilter -> aggregateConfigurer.configureSnapshotFilter(
+                    cache -> aggregateConfigurer.configureSnapshotFilter(
                             configuration -> {
-                                LOGGER.debug("Configure aggregate's snapshot filter from " + aggregateInfo);
-                                return snapshotFilter;
+                                LOGGER.debug("Configure aggregate's snapshot filter from " + aggregateInfo.snapshotFilter);
+                                return aggregateInfo.snapshotFilter;
                             }
                     )
             );
@@ -156,7 +156,7 @@ public class AggregateRegistration {
             Optional.ofNullable(aggregateInfo.commandTargetResolver).ifPresent(
                     commandTargetResolver -> aggregateConfigurer.configureCommandTargetResolver(
                             configuration -> {
-                                LOGGER.debug("Configure aggregate's command target resolver from " + aggregateInfo);
+                                LOGGER.debug("Configure aggregate's command target resolver from " + aggregateInfo.commandTargetResolver);
                                 return commandTargetResolver;
                             }
                     )
@@ -165,9 +165,28 @@ public class AggregateRegistration {
 //            aggregateConfigurer.configureFilterEventsByType(c -> aggregateAnnotation.filterEventsByType());
             aggregateConfigurer.configureFilterEventsByType(
                     configuration -> {
-                        LOGGER.debug("Configure aggregate's filter events by type from " + aggregateInfo);
+                        LOGGER.debug("Configure aggregate's filter events by type from " + aggregateInfo.filterEventsByType);
                         return aggregateInfo.filterEventsByType;
                     }
+            );
+
+            Optional.ofNullable(aggregateInfo.cache).ifPresent(
+                    cache -> aggregateConfigurer.configureCache(
+                            configuration -> {
+                                LOGGER.debug("Configure aggregate's cache from " + aggregateInfo.cache);
+                                return aggregateInfo.cache;
+                            }
+                    )
+            );
+
+
+            Optional.ofNullable(aggregateInfo.snapshotTriggerDefinition).ifPresent(
+                    cache -> aggregateConfigurer.configureSnapshotTrigger(
+                            configuration -> {
+                                LOGGER.debug("Configure aggregate's snapshot trigger definition from " + aggregateInfo.snapshotTriggerDefinition);
+                                return aggregateInfo.snapshotTriggerDefinition;
+                            }
+                    )
             );
 
 

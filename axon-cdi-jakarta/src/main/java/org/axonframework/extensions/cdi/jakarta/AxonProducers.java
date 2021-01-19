@@ -12,19 +12,23 @@ import jakarta.enterprise.util.AnnotationLiteral;
 import jakarta.inject.Inject;
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.common.caching.Cache;
 import org.axonframework.config.Configuration;
 import org.axonframework.deadline.DeadlineManager;
 import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventhandling.gateway.EventGateway;
 import org.axonframework.eventhandling.scheduling.EventScheduler;
+import org.axonframework.eventsourcing.SnapshotTriggerDefinition;
 import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
 import org.axonframework.eventsourcing.eventstore.EventStore;
+import org.axonframework.eventsourcing.snapshotting.SnapshotFilter;
 import org.axonframework.extensions.cdi.common.AbstractAxonProducers;
 import org.axonframework.extensions.cdi.common.AggregateInfo;
 import org.axonframework.extensions.cdi.jakarta.annotations.Aggregate;
 import org.axonframework.extensions.cdi.jakarta.annotations.AxonConfig;
 import org.axonframework.extensions.cdi.jakarta.annotations.ExternalCommandHandler;
 import org.axonframework.extensions.cdi.jakarta.annotations.Internal;
+import org.axonframework.modelling.command.CommandTargetResolver;
 import org.axonframework.queryhandling.QueryBus;
 import org.axonframework.queryhandling.QueryGateway;
 import org.axonframework.queryhandling.QueryUpdateEmitter;
@@ -33,6 +37,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
+import java.util.Optional;
+
+import static java.lang.String.format;
 
 @ApplicationScoped
 @Internal
@@ -67,15 +74,24 @@ public class AxonProducers extends AbstractAxonProducers implements Serializable
                         LOGGER.debug("found aggregate: " + bean);
 
                         Aggregate aggregate = bean.getBeanClass().getAnnotation(Aggregate.class);
-                        System.out.println("\t cache: " + aggregate.cache());
-                        System.out.println("\t commandTargetResolver: " + aggregate.commandTargetResolver());
                         System.out.println("\t filterEventsByType: " + aggregate.filterEventsByType());
                         System.out.println("\t repo: " + aggregate.repository());
-                        System.out.println("\t snapshotFilter: " + aggregate.snapshotFilter());
-                        System.out.println("\t snapshotTriggerDefinition: " + aggregate.snapshotTriggerDefinition());
-                        System.out.println("\t type: " + aggregate.type());
 
                         AggregateInfo aggregateInfo = new AggregateInfo(bean.getName(), bean.getBeanClass());
+                        aggregateInfo.commandTargetResolver = instantiateByName(
+                                aggregate.commandTargetResolver(),
+                                CommandTargetResolver.class);
+                        aggregateInfo.snapshotFilter = instantiateByName(
+                                aggregate.snapshotFilter(),
+                                SnapshotFilter.class);
+                        aggregateInfo.snapshotTriggerDefinition = instantiateByName(
+                                aggregate.snapshotTriggerDefinition(),
+                                SnapshotTriggerDefinition.class);
+                        aggregateInfo.cache = instantiateByName(
+                                aggregate.cache(),
+                                Cache.class);
+                        aggregateInfo.type = aggregate.type();
+
                         aggregateInfoSet.add(aggregateInfo);
                     }
 
@@ -87,52 +103,32 @@ public class AxonProducers extends AbstractAxonProducers implements Serializable
                 });
     }
 
+    private <T> T instantiateByName(String beanName, Class<T> type) {
+        beanName = beanName.trim();
+        if (!"".equals(beanName)) {
+            LOGGER.debug(format("Looking for bean named '%s' of type '%s'", beanName, type));
+            Optional<Bean<T>> bean = beanManager.getBeans(beanName).stream()
+                    .filter(b -> b.getTypes().stream()
+                            .anyMatch(beanType -> type.isAssignableFrom((Class<?>)beanType)))
+                    .map(b -> (Bean<T>)b)
+                    .findFirst();
+
+            if (bean.isPresent()) {
+                LOGGER.debug(format("Found: %s", bean.get()));
+                return instantiate(bean.get(), type);
+            } else {
+                LOGGER.warn(format("Bean named '%s' was not found or is not of type '%s'", beanName, type));
+            }
+        }
+        return null;
+    }
+
+
     private <T> T instantiate(Bean bean, Class<T> type) {
         CreationalContext creationalContext = beanManager.createCreationalContext(bean);
         return (T) beanManager.getReference(bean, type, creationalContext);
     }
 
-
-//    @Override
-//    protected Set<AggregateInfo> getAggregates() {
-//        scanContext();
-//        return aggregateInfoSet;
-//
-////        LOGGER.debug("collecting annotated aggregates");
-////        return beanManager.getBeans(Object.class, new AnnotationLiteral<Any>() {}).stream()
-////                .filter(bean -> bean.getStereotypes().contains(Aggregate.class))
-////                .map(bean -> {
-////                    AggregateInfo aggregateInfo = new AggregateInfo (bean.getName(), bean.getBeanClass());
-////                    return aggregateInfo;
-////                })
-////                .collect(Collectors.toSet());
-////                .forEach(bean -> {
-////                    System.out.println("BEAN: " + bean);
-////                    System.out.println("\tBEAN scope: " + bean.getScope());
-////                    bean.getStereotypes().forEach(aClass ->
-////                            System.out.println("\tstereotype: " + aClass)
-////                    );
-////                });
-//
-//
-////        return beanManager.getBeans(Object.class, new AnnotationLiteral<Aggregate>() {}).stream()
-////                .peek(bean -> LOGGER.debug("found aggregate: " + bean))
-////                .map(bean -> {
-////                    bean.getStereotypes().forEach(annotation ->
-////                            System.out.println("ANNOTATION: " + annotation)
-////                    );
-////
-//////                    AggregateModel aggregateModel = AnnotatedAggregateMetaModelFactory
-////////                            .inspectAggregate(bean.getBeanClass(), subtypes.keySet());
-//////                            .inspectAggregate(bean.getBeanClass());
-////////                    CDIAggregateFactory aggregateFactory = new CDIAggregateFactory(aggregateModel);
-//////                    CDIAggregateFactory2 aggregateFactory = new CDIAggregateFactory2(bean, Collections.emptyMap());
-////                    AggregateInfo aggregateInfo = new AggregateInfo (bean.getName(), bean.getBeanClass());
-//////                    aggregateInfo.setAggregateFactory(aggregateFactory);
-////                    return aggregateInfo;
-////                })
-////                .collect(Collectors.toSet());
-//    }
 
 
     @Default
