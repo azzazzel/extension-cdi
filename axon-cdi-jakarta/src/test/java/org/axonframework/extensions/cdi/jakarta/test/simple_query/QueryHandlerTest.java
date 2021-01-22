@@ -13,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.axonframework.extensions.cdi.jakarta.test.TestUtils.echo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -40,9 +41,7 @@ public class QueryHandlerTest {
     public void test() {
         try {
             String result = (String) queryGateway.query(new SimpleQuery(message), SimpleQueryResult.class).get().getText();
-//            assertEquals(echo(message), result);
-//            result = (String) queryGateway.send(new AnotherSimpleCommand(message)).get();
-//            assertEquals(echo(message), result);
+            assertEquals(echo(message), result);
         } catch (Exception e) {
             fail("Sending command FAILED with " + e);
         }
