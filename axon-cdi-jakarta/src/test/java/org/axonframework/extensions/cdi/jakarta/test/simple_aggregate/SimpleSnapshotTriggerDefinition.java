@@ -3,11 +3,9 @@ package org.axonframework.extensions.cdi.jakarta.test.simple_aggregate;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import org.axonframework.config.Configuration;
-import org.axonframework.eventhandling.EventMessage;
 import org.axonframework.eventsourcing.AbstractSnapshotTrigger;
 import org.axonframework.eventsourcing.SnapshotTrigger;
 import org.axonframework.eventsourcing.SnapshotTriggerDefinition;
-import org.axonframework.eventsourcing.Snapshotter;
 
 import static org.axonframework.extensions.cdi.jakarta.test.TestUtils.successes;
 

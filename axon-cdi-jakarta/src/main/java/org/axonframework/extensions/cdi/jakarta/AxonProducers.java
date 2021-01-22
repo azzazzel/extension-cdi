@@ -31,12 +31,15 @@ import org.axonframework.extensions.cdi.jakarta.annotations.Internal;
 import org.axonframework.modelling.command.CommandTargetResolver;
 import org.axonframework.queryhandling.QueryBus;
 import org.axonframework.queryhandling.QueryGateway;
+import org.axonframework.queryhandling.QueryHandler;
 import org.axonframework.queryhandling.QueryUpdateEmitter;
 import org.axonframework.serialization.Serializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
+import java.lang.annotation.Annotation;
+import java.util.Arrays;
 import java.util.Optional;
 
 import static java.lang.String.format;
@@ -100,7 +103,17 @@ public class AxonProducers extends AbstractAxonProducers implements Serializable
                         commandHandlersSet.add(instantiate(bean, Object.class));
                     }
 
+                    if (hasMethodAnnotatedWith(bean, QueryHandler.class)) {
+                        LOGGER.debug("found query handler: " + bean);
+                        queryHandlersSet.add(instantiate(bean, Object.class));
+                    }
+
                 });
+    }
+
+    private boolean hasMethodAnnotatedWith(Bean<?> bean, Class<? extends Annotation> annotation) {
+        return Arrays.stream(bean.getBeanClass().getDeclaredMethods())
+                .anyMatch(method -> method.isAnnotationPresent(annotation));
     }
 
     private <T> T instantiateByName(String beanName, Class<T> type) {

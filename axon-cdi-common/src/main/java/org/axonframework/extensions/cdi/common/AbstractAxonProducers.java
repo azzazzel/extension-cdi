@@ -30,6 +30,7 @@ public abstract class AbstractAxonProducers {
 
     protected Set<AggregateInfo> aggregateInfoSet = new HashSet<>();
     protected Set<Object> commandHandlersSet = new HashSet<>();
+    protected Set<Object> queryHandlersSet = new HashSet<>();
     protected Set<EventStorageEngine> eventStorageEnginesSet = new HashSet<>();
     private boolean discoveryComplete = false;
 
@@ -59,6 +60,13 @@ public abstract class AbstractAxonProducers {
                     LOGGER.debug("Registering command handler: " + commandHandler);
                     configurer.registerCommandHandler(configuration -> commandHandler);
                 });
+
+        queryHandlersSet.stream()
+                .forEach(queryHandler -> {
+                    LOGGER.debug("Registering query handler: " + queryHandler);
+                    configurer.registerQueryHandler(configuration -> queryHandler);
+                });
+
 
         register(aggregateInfoSet, configurer);
 
