@@ -11,6 +11,7 @@ import jakarta.enterprise.inject.spi.BeanManager;
 import jakarta.enterprise.util.AnnotationLiteral;
 import jakarta.inject.Inject;
 import org.axonframework.commandhandling.CommandBus;
+import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.common.caching.Cache;
 import org.axonframework.config.Configuration;
@@ -26,7 +27,6 @@ import org.axonframework.extensions.cdi.common.AbstractAxonProducers;
 import org.axonframework.extensions.cdi.common.AggregateInfo;
 import org.axonframework.extensions.cdi.jakarta.annotations.Aggregate;
 import org.axonframework.extensions.cdi.jakarta.annotations.AxonConfig;
-import org.axonframework.extensions.cdi.jakarta.annotations.ExternalCommandHandler;
 import org.axonframework.extensions.cdi.jakarta.annotations.Internal;
 import org.axonframework.modelling.command.CommandTargetResolver;
 import org.axonframework.queryhandling.QueryBus;
@@ -98,7 +98,7 @@ public class AxonProducers extends AbstractAxonProducers implements Serializable
                         aggregateInfoSet.add(aggregateInfo);
                     }
 
-                    if (bean.getStereotypes().contains(ExternalCommandHandler.class)) {
+                    if (hasMethodAnnotatedWith(bean, CommandHandler.class)) {
                         LOGGER.debug("found command handler: " + bean);
                         commandHandlersSet.add(instantiate(bean, Object.class));
                     }
