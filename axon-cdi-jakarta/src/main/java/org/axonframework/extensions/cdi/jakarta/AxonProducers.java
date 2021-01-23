@@ -13,6 +13,7 @@ import jakarta.inject.Inject;
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.common.annotation.AnnotationUtils;
 import org.axonframework.common.caching.Cache;
 import org.axonframework.config.Configuration;
 import org.axonframework.deadline.DeadlineManager;
@@ -113,7 +114,7 @@ public class AxonProducers extends AbstractAxonProducers implements Serializable
 
     private boolean hasMethodAnnotatedWith(Bean<?> bean, Class<? extends Annotation> annotation) {
         return Arrays.stream(bean.getBeanClass().getDeclaredMethods())
-                .anyMatch(method -> method.isAnnotationPresent(annotation));
+                .anyMatch(method -> AnnotationUtils.isAnnotationPresent(method, annotation));
     }
 
     private <T> T instantiateByName(String beanName, Class<T> type) {
