@@ -68,7 +68,7 @@
                     <plugin>
                         <groupId>org.codehaus.cargo</groupId>
                         <artifactId>cargo-maven2-plugin</artifactId>
-                        <version>1.6.9</version>
+                        <version>1.8.5</version>
                         <configuration>
                             <container>
                                 <containerId>wildfly10x</containerId>
@@ -93,7 +93,7 @@
                     <plugin>
                         <groupId>org.codehaus.cargo</groupId>
                         <artifactId>cargo-maven2-plugin</artifactId>
-                        <version>1.6.9</version>
+                        <version>1.8.5</version>
                         <configuration>
                             <container>
                                 <containerId>wildfly11x</containerId>
@@ -118,7 +118,7 @@
                     <plugin>
                         <groupId>org.codehaus.cargo</groupId>
                         <artifactId>cargo-maven2-plugin</artifactId>
-                        <version>1.6.9</version>
+                        <version>1.8.5</version>
                         <configuration>
                             <container>
                                 <containerId>tomee7x</containerId>
@@ -139,7 +139,7 @@
                     <plugin>
                         <groupId>org.codehaus.cargo</groupId>
                         <artifactId>cargo-maven2-plugin</artifactId>
-                        <version>1.6.9</version>
+                        <version>1.8.5</version>
                         <configuration>
                             <container>
                                 <containerId>glassfish5x</containerId>
